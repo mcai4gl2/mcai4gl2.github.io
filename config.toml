@@ -9,6 +9,6 @@ name = "Hardware"
 weight = 1
 
 [[menu.main]]
-url = "/foods"
-name = "Food"
+url = "/others"
+name = "Others"
 weight = 2
