@@ -26,7 +26,7 @@ I have been using Nano for several days and didn't really like the fact that I h
 I decided to keep the old PC for some more time now given my journey of reusing things. The CPU and hard drive were obvious but the power button was definitely a surprise for me. 
 
 It is also intriguing to see how little differences in my productivity when using the old machine vs new machine. I measure my productivity crudely by looking at codes I write after work. In 2020, I am writing all of these commits in my old PC:
-![2020](/old-machine/2020.jpg)
+![2020](/old-machine/2020.PNG)
 In 2021, I got the new PC in late Mar:
-![2021](/old-machine/2021.jpg)
+![2021](/old-machine/2021.PNG)
 In another word, it is very hard to justify the money I spent on buying the new NUC, haha.
