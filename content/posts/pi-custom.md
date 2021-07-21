@@ -29,7 +29,7 @@ On the right, I have fit in 2 mini breadboards. I have jumper cables to connect 
 
 I also fitted a OLED screen:
 ![Screen](/pi-custom/screen.jpg)
-with some taps. Like the screen in  [Michael Klements's video](https://www.youtube.com/watch?v=9sb_zuHGmY4&t=24s&ab_channel=MichaelKlements), it displays IP address, CPU tempature and load, disk and memory usages. The two fans, OLED screens are all connected to the breadboard instead of GPIO. The breadboard allows all three of them sharing the same 5V and ground pins. 
+with some taps. Like the screen in [Michael Klements's video](https://www.youtube.com/watch?v=9sb_zuHGmY4&t=24s&ab_channel=MichaelKlements), it displays IP address, CPU tempature and load, disk and memory usages. The two fans, OLED screens are all connected to the breadboard instead of GPIO. The breadboard allows all three of them sharing the same 5V and ground pins. 
 
 ![Screen On](/pi-custom/screen_on.jpg)
 
