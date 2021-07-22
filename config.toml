@@ -9,6 +9,11 @@ name = "Hardware"
 weight = 1
 
 [[menu.main]]
+url = "/softwares"
+name = "Software"
+weight = 2
+
+[[menu.main]]
 url = "/others"
 name = "Others"
-weight = 2
+weight = 3
