@@ -11,7 +11,7 @@ This setup has been working quite nice for me where I can write libraries in jav
 ```
 Class file has wrong version 61.0, should be 55.0
 ```
-`55.0` is java11, but I didn't remember I installed it but it clearly on my path. `where java` shows:
+`55.0` is java11, but I didn't remember I installed it but it clearly is on my path. `where java` shows:
 ```
 C:\Programming\miniconda3\envs\jupyter\Library\bin\java.exe
 C:\Program Files\Java\jdk-17.0.2\bin\java.exe
@@ -21,7 +21,7 @@ So this java is only for my `jupyter` conda environment, which shall be installe
 conda list --revisions
 conda install --revision 5
 ```
-I managed to revert the environment before tabula-py installation and everything started to work again (version 5 is the version before I installed `tabula-py`).
+I managed to revert the environment before tabula-py installation and everything started to work again (version 5 is the version before I installed tabula-py).
 
 I went to [tabula-py Github](https://github.com/chezou/tabula-py) to read more about the package as I thought it was a pure python package before. I then find out it is actually a python wrapper of the java library. This kind of explains why the java dependency is added. I opened [`setup.cfg`](https://github.com/chezou/tabula-py/blob/master/setup.cfg) and looked for the last missing jigsaw piece: the java dependency. And it is not there!
 
