@@ -1,4 +1,119 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog of Random things</title><link>https://mcai4gl2.github.io/</link><description>Recent content on Blog of Random things</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 19 Mar 2022 14:04:31 +0800</lastBuildDate><atom:link href="https://mcai4gl2.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Triaging Path Issue with tabula-py</title><link>https://mcai4gl2.github.io/softwares/tabula-py-path/</link><pubDate>Sat, 19 Mar 2022 14:04:31 +0800</pubDate><guid>https://mcai4gl2.github.io/softwares/tabula-py-path/</guid><description>Blog of Random things https://mcai4gl2.github.io/softwares/tabula-py-path/ -&lt;p>I have been big fan of Jupyter Notebooks ever since it was still called ipython. The ability to be able to interactively develop code with immediate data cached is extremely powerful for quick prototyping and data exploration. Originally started for python, Jupyter nowadays supports all different programming languages.&lt;/p>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog of Random things</title><link>https://mcai4gl2.github.io/</link><description>Recent content on Blog of Random things</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 17 Apr 2022 07:55:59 +0800</lastBuildDate><atom:link href="https://mcai4gl2.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Hello World Application with ZeroC Ice</title><link>https://mcai4gl2.github.io/softwares/ice/</link><pubDate>Sun, 17 Apr 2022 07:55:59 +0800</pubDate><guid>https://mcai4gl2.github.io/softwares/ice/</guid><description>Blog of Random things https://mcai4gl2.github.io/softwares/ice/ -&lt;p>&lt;a href="https://zeroc.com/products/ice">Ice&lt;/a> is ZeroC&amp;rsquo;s opensource RPC framework which supports interoperability in multiple languages. With Ice framework, it takes care of server management, discovery, and serialization, so developer can concentrate on business logic.&lt;/p>
+&lt;p>When creating Ice application, the first step is create a slice file. This file sets up the contract/interface between client and server. In our hello world application, we use the following very simple &lt;code>Hello&lt;/code> interface.&lt;/p>
+&lt;pre tabindex="0">&lt;code>module Demo {
+interface Hello {
+string SayHello(string username);
+};
+}di
+&lt;/code>&lt;/pre>&lt;p>The next step is to use ice tool &lt;code>slice2py&lt;/code> to compile the &lt;code>.ice&lt;/code> slice file. This generates codes required for both client and server application to use. To demonstrate how this is done, I have created &lt;a href="https://github.com/mcai4gl2/ice-play/blob/main/ice-helloworld/Dockerfile">a docker image&lt;/a>, as docker is a great way to test and play software in an isolated environment without affecting existing development setup. I have built the image and published to &lt;a href="https://hub.docker.com/repository/docker/mcai4gl2/ice-helloworld">dockerhub&lt;/a> as well.&lt;/p>
+&lt;p>&lt;code>slice2py&lt;/code> generates &lt;code>Hello_ice.py&lt;/code> and &lt;code>Demo&lt;/code> module from &lt;code>Hello.ice&lt;/code> input:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ docker run -it --rm mcai4gl2/ice-helloworld:latest /bin/bash
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>root@98884be4a9cb:/app# cd /dependencies
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>root@98884be4a9cb:/dependencies# ls -ltr
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>total &lt;span style="color:#ae81ff">20&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-rw-r--r-- &lt;span style="color:#ae81ff">1&lt;/span> root root &lt;span style="color:#ae81ff">91&lt;/span> Apr &lt;span style="color:#ae81ff">17&lt;/span> 08:27 environment.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-rw-r--r-- &lt;span style="color:#ae81ff">1&lt;/span> root root &lt;span style="color:#ae81ff">105&lt;/span> Apr &lt;span style="color:#ae81ff">17&lt;/span> 08:27 environment-dev.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-rw-r--r-- &lt;span style="color:#ae81ff">1&lt;/span> root root &lt;span style="color:#ae81ff">104&lt;/span> Apr &lt;span style="color:#ae81ff">17&lt;/span> 08:27 Hello.ice
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-rw-r--r-- &lt;span style="color:#ae81ff">1&lt;/span> root root &lt;span style="color:#ae81ff">2668&lt;/span> Apr &lt;span style="color:#ae81ff">17&lt;/span> 08:30 Hello_ice.py
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>drwxr-xr-x &lt;span style="color:#ae81ff">2&lt;/span> root root &lt;span style="color:#ae81ff">4096&lt;/span> Apr &lt;span style="color:#ae81ff">17&lt;/span> 08:30 Demo
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We can interactively connect to the docker image and run &lt;code>python -c 'import Demo'&lt;/code> to make sure everything is setup.&lt;/p>
+&lt;p>The &lt;a href="https://github.com/mcai4gl2/ice-play/blob/main/ice-helloworld/server.py">server.py&lt;/a> implements the &lt;code>Hello&lt;/code> code generated to provide concreate implementation of our demo interface:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> sys
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> Ice
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> Demo &lt;span style="color:#f92672">import&lt;/span> Hello
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">HelloServer&lt;/span>(Hello):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">SayHello&lt;/span>(self, input, current&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">None&lt;/span>):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Hello &lt;/span>&lt;span style="color:#e6db74">{&lt;/span>input&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> __name__ &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;__main__&amp;#34;&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> communicator &lt;span style="color:#f92672">=&lt;/span> Ice&lt;span style="color:#f92672">.&lt;/span>initialize(sys&lt;span style="color:#f92672">.&lt;/span>argv)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> adapter &lt;span style="color:#f92672">=&lt;/span> communicator&lt;span style="color:#f92672">.&lt;/span>createObjectAdapterWithEndpoints(&lt;span style="color:#e6db74">&amp;#34;HelloAdapter&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;default -p 10000&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> servant &lt;span style="color:#f92672">=&lt;/span> HelloServer()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> adapter&lt;span style="color:#f92672">.&lt;/span>add(servant, communicator&lt;span style="color:#f92672">.&lt;/span>stringToIdentity(&lt;span style="color:#e6db74">&amp;#34;hello&amp;#34;&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> adapter&lt;span style="color:#f92672">.&lt;/span>activate()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> communicator&lt;span style="color:#f92672">.&lt;/span>waitForShutdown()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">finally&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> communicator&lt;span style="color:#f92672">.&lt;/span>destroy()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Here, we run our application on port 10000.&lt;/p>
+&lt;p>The &lt;a href="https://github.com/mcai4gl2/ice-play/blob/main/ice-helloworld/client.py">client.py&lt;/a> code to consume the server service is as follows:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> sys
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> Ice
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> Demo &lt;span style="color:#f92672">import&lt;/span> HelloPrx
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> __name__ &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;__main__&amp;#34;&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> communicator &lt;span style="color:#f92672">=&lt;/span> Ice&lt;span style="color:#f92672">.&lt;/span>initialize(sys&lt;span style="color:#f92672">.&lt;/span>argv)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> base &lt;span style="color:#f92672">=&lt;/span> communicator&lt;span style="color:#f92672">.&lt;/span>stringToProxy(&lt;span style="color:#e6db74">&amp;#34;hello:default -p 10000&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> hello &lt;span style="color:#f92672">=&lt;/span> HelloPrx&lt;span style="color:#f92672">.&lt;/span>checkedCast(base)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">not&lt;/span> hello:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">raise&lt;/span> RunTimeErrror(&lt;span style="color:#e6db74">&amp;#34;Invalid ice proxy&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> result &lt;span style="color:#f92672">=&lt;/span> hello&lt;span style="color:#f92672">.&lt;/span>SayHello(&lt;span style="color:#e6db74">&amp;#34;World!&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Reply from server: &lt;/span>&lt;span style="color:#e6db74">{&lt;/span>result&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">finally&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> communicator&lt;span style="color:#f92672">.&lt;/span>destroy()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To test the setup, we can &lt;a href="https://github.com/mcai4gl2/ice-play/tree/main/ice-helloworld">run the docker image interactively&lt;/a> with:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker run -it --rm mcai4gl2/ice-helloworld:latest /bin/bash
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>root@6ecdd4ac9c63:/app# python server.py &amp;amp;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>1&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#ae81ff">12&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>root@6ecdd4ac9c63:/app# python client.py
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Reply from server: Hello World!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In this minimal example, we are leveraging Ice mainly for serialization. We are self-managing the service discovery and service placement. Leveraging Ice for IO can be especially useful in a multi languages project. As an example, in &lt;a href="https://github.com/mcai4gl2/ice-play/blob/main/ice-helloworld-cpp-client/Dockerfile">this Dockerfile&lt;/a>, we have extended the helloworld application with C++ client but using the same python server implementation.&lt;/p>
+&lt;p>Instead of using &lt;code>slice2py&lt;/code>, we use &lt;code>slice2cpp&lt;/code> to generate required code. The &lt;code>client.cpp&lt;/code> is as follows:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;Ice/Ice.h&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;Hello.h&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> &lt;span style="color:#66d9ef">namespace&lt;/span> std;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> &lt;span style="color:#66d9ef">namespace&lt;/span> Demo;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> argc, &lt;span style="color:#66d9ef">char&lt;/span>&lt;span style="color:#f92672">*&lt;/span> argv[])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> status &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Ice&lt;span style="color:#f92672">::&lt;/span>CommunicatorPtr ic;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ic &lt;span style="color:#f92672">=&lt;/span> Ice&lt;span style="color:#f92672">::&lt;/span>initialize(argc, argv);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Ice&lt;span style="color:#f92672">::&lt;/span>ObjectPrx base &lt;span style="color:#f92672">=&lt;/span> ic&lt;span style="color:#f92672">-&amp;gt;&lt;/span>stringToProxy(&lt;span style="color:#e6db74">&amp;#34;hello:default -p 10000&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> HelloPrx hello &lt;span style="color:#f92672">=&lt;/span> HelloPrx&lt;span style="color:#f92672">::&lt;/span>checkedCast(base);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#f92672">!&lt;/span>hello)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">throw&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Invalid proxy&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> string result &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> result &lt;span style="color:#f92672">=&lt;/span> hello&lt;span style="color:#f92672">-&amp;gt;&lt;/span>SayHello(&lt;span style="color:#e6db74">&amp;#34;test&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cout &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;client&amp;#39;s result: &amp;#34;&lt;/span> &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> result &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> endl;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">catch&lt;/span> (&lt;span style="color:#66d9ef">const&lt;/span> Ice&lt;span style="color:#f92672">::&lt;/span>Exception&lt;span style="color:#f92672">&amp;amp;&lt;/span> ex)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cerr &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> ex &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> endl;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> status &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">catch&lt;/span> (&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#66d9ef">char&lt;/span>&lt;span style="color:#f92672">*&lt;/span> msg)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cerr &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> msg &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> endl;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> status &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (ic)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ic&lt;span style="color:#f92672">-&amp;gt;&lt;/span>destroy();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> status;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To test this setup, we can &lt;a href="https://github.com/mcai4gl2/ice-play/tree/main/ice-helloworld-cpp-client">run the docker image interactively&lt;/a> with:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker run -it -v --rm mcai4gl2/ice-helloworld-cpp-client:latest /bin/bash
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>root@10ec86155d14:/app# python server.py &amp;amp;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>1&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#ae81ff">11&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>root@10ec86155d14:/app# ./client
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>client&lt;span style="color:#960050;background-color:#1e0010">&amp;#39;&lt;/span>s result: Hello test
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>root@10ec86155d14:/app#
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Next time, we will extend this demo application to use IceGrid to manage both.&lt;/p>
+- https://mcai4gl2.github.io/softwares/ice/ -</description></item><item><title>Triaging Path Issue with tabula-py</title><link>https://mcai4gl2.github.io/softwares/tabula-py-path/</link><pubDate>Sat, 19 Mar 2022 14:04:31 +0800</pubDate><guid>https://mcai4gl2.github.io/softwares/tabula-py-path/</guid><description>Blog of Random things https://mcai4gl2.github.io/softwares/tabula-py-path/ -&lt;p>I have been big fan of Jupyter Notebooks ever since it was still called ipython. The ability to be able to interactively develop code with immediate data cached is extremely powerful for quick prototyping and data exploration. Originally started for python, Jupyter nowadays supports all different programming languages.&lt;/p>
 &lt;p>Recently, I have been working on a Java project at home. So, I took sometime to test &lt;a href="https://github.com/SpencerPark/IJava">IJava&lt;/a> and &lt;a href="https://github.com/mcai4gl2/jupyter-ijava">get it working with Java 17 in docker&lt;/a>. I am using this image to build all my Java Jupyter notebooks in Github Action for CI. In my local setup at home on Windows, I have a conda environment running Jupyter and IJava with jdk17 installed and java on the PATH.&lt;/p>
 &lt;p>This setup has been working quite nice for me where I can write libraries in java in Intellij and then import the complied jar to Jupyter for quick testing and visualization of data. Last week, I have been asked by my wife to help extracting tables from a number of pdf files into excel spreadsheet for her. I did some quick search and installed &lt;a href="https://github.com/chezou/tabula-py">tabula-py&lt;/a>. This worked quite well and she is happy except the some rows with merged cells she had to clean up manually. I did this quickly without the due diligence of creating a new conda environment. tabula-py was installed on the one I used for my own java project directly. When I went back to my own project, my java notebook started to complain:&lt;/p>
 &lt;pre tabindex="0">&lt;code>Class file has wrong version 61.0, should be 55.0
@@ -252,33 +367,4 @@ conda recipe on conda-forge is not maintained by us. We recommend to install via
 &lt;p>Along with the wireless router, there is also a Raspberry Pi 4 connected to &lt;a href="https://www.amazon.com/ORICO-Bay-Hard-Drive-Enclosure/dp/B0734CZSXL/ref=sr_1_6">ORICO 2 bay hard drive enclosure&lt;/a> running plex. As HongKong summer is really hot and living room is usually without AC, I had 2 more fans there to provide extra airflow.&lt;/p>
 &lt;p>If I had more space, I would prefer to have the second monitor horizontal instead of vertical. This is because when I use the main monitor for something else, the vertical monitor doesn&amp;rsquo;t really work as a primary monitor as a lot of applications just don&amp;rsquo;t scale properly or look weird.&lt;/p>
 &lt;p>As a final note, I think I shall stop buying more stuff as I have more than enough. But &amp;hellip;&lt;/p>
-- https://mcai4gl2.github.io/computers/desk/ -</description></item><item><title>Meat Day Today!</title><link>https://mcai4gl2.github.io/others/meat/</link><pubDate>Wed, 21 Jul 2021 13:20:46 +0800</pubDate><guid>https://mcai4gl2.github.io/others/meat/</guid><description>Blog of Random things https://mcai4gl2.github.io/others/meat/ -&lt;p>It may sound strange but I always found eating out by myself very weird. It maybe due to the fact that I couldn&amp;rsquo;t order many dishes. Maybe it is just the loneness when seating down by myself. Maybe it is because I don&amp;rsquo;t have a lot of things to watch on my phone. I have always prefer to cook myself at home or do takeaways. I even rarely do delivery until early this year during my two weeks&amp;rsquo; quarantine in Hongkong. The last time I eat out by myself this year would go back to my birthday in April, when I went to Outback Steakhouse in Olympian city for lunch.&lt;/p>
-&lt;p>I planed to go Gyu-Kaku for buffet for sometime. It sounds not that good an idea because Gyu-Kaku has always been busy with long queues. Also, I am kind of on diet for past several weeks and I skip dinner completely. But since I am on holiday this week, I feel I shall really go and take advantage of the discount on work day, haha.&lt;/p>
-&lt;p>I did exactly the kind of preparation needed for buffet, skipping dinner last night (as usual) and skipping breakfast this morning as well. So, I went to Gyu-Kaku quite early today at 11:30. Not only because there would be no queue at the time, but also because I am quite hungry at the time.&lt;/p>
-&lt;p>The no queue experience is good. I chose the US SRF Angus Wagyu Buffet, which is 338 HKD for early bird on work day (90 mins eating). I got my QR code and then ready to order with my phone. Like any software, the website doesn&amp;rsquo;t open. I was cautious about my phone&amp;rsquo;s reception in the restaurant so I took both my phones with me today, both of which don&amp;rsquo;t work on the ordering website. Waiting for 5 mins, I managed to open the page but when submitting the order, the website gave me error connecting to the server. So, I had to get my order done manually with waiter. With another 5 mins waiting, my first round of food finally arrived:
-&lt;img src="https://mcai4gl2.github.io/meat/first.jpg" alt="first">
-The food is nice but it is already 20 mins since I set down!&lt;/p>
-&lt;p>The website is then up and down from time to time. I got a new QR code from the restaurant. I tired to order second round of food but got different errors. I stopped trying and waited for 5 mins. I did get the food but everything was doubled up since I submitted twice as it failed the first time around (apparently not failed):
-&lt;img src="https://mcai4gl2.github.io/meat/second.jpg" alt="second">
-I didn&amp;rsquo;t mind doubling it up as I enjoyed the food anyway.&lt;/p>
-&lt;p>Finally, after I got my third QR code, the website is fully functional. I got some more meat:
-&lt;img src="https://mcai4gl2.github.io/meat/third.jpg" alt="third">
-and noodles:
-&lt;img src="https://mcai4gl2.github.io/meat/noodles.jpg" alt="noodles">&lt;/p>
-&lt;p>Since I am eating by myself, I am very much concentrated on eating. So, 90 mins is more than enough to fill me up. I didn&amp;rsquo;t ask for extension of my 90 mins because their technology doesn&amp;rsquo;t work. In the end, I paid 371.8 with 10% service charge. I would argue the service is not that good given all the problems with their website on a grumpy day. But given all the meat I have today after 2 weeks of diet, I am happy enough to just pay and leave.&lt;/p>
-&lt;p>Foods I enjoyed:&lt;/p>
-&lt;ul>
-&lt;li>The sauce is pretty good to mix with any kind of barbecue&lt;/li>
-&lt;li>The beef tongues are good for me. It is not a thing I usually cook. So, very nice to have it when I am eating out&lt;/li>
-&lt;li>Enoki mushroom is interesting idea
-&lt;img src="https://mcai4gl2.github.io/meat/mushroom.jpg" alt="mushroom">&lt;/li>
-&lt;/ul>
-&lt;p>Foods I found a little bit strange:&lt;/p>
-&lt;ul>
-&lt;li>Tripe and intestine are a little bit strange for barbecue&lt;/li>
-&lt;li>Oyster is not as good as I hoped&lt;/li>
-&lt;/ul>
-&lt;p>After I got home, I opened the website in my phone again as I would like to get a screenshot of all the foods I ordered. Unfortunately, instead of my orders, I got the next customer sitting at my table&amp;rsquo;s order instead. Looking at the webpage URL, there is a token which I guess linked to the QR code, so I guess my QR code just had the wrong expiry. I don&amp;rsquo;t particular mind to see other people&amp;rsquo;s ordering, as it gave me several ideas on what I would like to try next time. But from a software developer perspective, a cross client incident is not good. The QR code should have expired as soon as I paid or it shall still show my orders until some house keeping.&lt;/p>
-&lt;p>The website&amp;rsquo;s URL is: &lt;a href="https://kabu-byod.azurewebsites.net/order?shopCode=GKK-OC&amp;amp;token=">https://kabu-byod.azurewebsites.net/order?shopCode=GKK-OC&amp;amp;token=&lt;/a>. I wonder how much penetration/security tests have been done. It is not something I am familiar with though. So, I won&amp;rsquo;t randomly generate some tokens and try to hit the link.&lt;/p>
-&lt;p>A good lunch with some software failures. My diet continues tomorrow. I am not looking forward to weight myself tomorrow morning though &amp;hellip;&lt;/p>
-- https://mcai4gl2.github.io/others/meat/ -</description></item></channel></rss>
+- https://mcai4gl2.github.io/computers/desk/ -</description></item></channel></rss>
