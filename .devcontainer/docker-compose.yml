@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  hugo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "1313:1313"
+    volumes:
+      - ..:/src
+    command: ["hugo", "server", "--bind", "0.0.0.0", "--port", "1313", "--buildDrafts", "--buildFuture"]
+    environment:
+      - HUGO_ENV=development
+    restart: unless-stopped

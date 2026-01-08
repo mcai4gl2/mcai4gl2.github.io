@@ -1,0 +1,24 @@
+{
+  "name": "Hugo Blog",
+  "dockerFile": "Dockerfile",
+  "context": "..",
+  "appPort": 1313,
+  "extensions": [
+    "budparr.language-hugo-vscode",
+    "ms-vscode.vscode-json"
+  ],
+  "settings": {
+    "files.associations": {
+      "*.toml": "toml"
+    },
+    "html.format.indentInnerHtml": true,
+    "html.format.wrapAttributes": "auto"
+  },
+  "forwardPorts": [1313],
+  "postCreateCommand": "git submodule update --init --recursive",
+  "postStartCommand": "hugo server --bind 0.0.0.0 --port 1313 --buildDrafts --buildFuture",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/src,type=bind"
+  ],
+  "remoteUser": "vscode"
+}
