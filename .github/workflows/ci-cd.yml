@@ -86,9 +86,10 @@ jobs:
           docker run --rm \
             -v $PWD:/src \
             -w /src \
-            --entrypoint hugo \
+            --user root \
+            --entrypoint bash \
             hugo-devcontainer:test \
-            --minify
+            -c "chown -R vscode:vscode /src && su - vscode -c 'cd /src && hugo --minify'"
 
       - name: Verify public directory exists
         run: |
