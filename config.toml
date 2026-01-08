@@ -3,6 +3,10 @@ languageCode = "en-us"
 title = "Blog of Random things"
 theme = "diary"
 
+# Google Analytics (empty to prevent template errors)
+googleAnalytics = ""
+GoogleAnalytics = ""
+
 [[menu.main]]
 url = "/computers"
 name = "Hardware"
