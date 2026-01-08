@@ -3,6 +3,9 @@ languageCode = "en-us"
 title = "Blog of Random things"
 theme = "diary"
 
+# Google Analytics (for theme compatibility)
+GoogleAnalytics = ""
+
 # Google Analytics configuration
 [params]
   googleAnalytics = ""
