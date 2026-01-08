@@ -81,8 +81,11 @@ class ImageProcessor:
         # Process the image
         try:
             with Image.open(image_path) as img:
-                original_size = img.size
-                output_sizes = calculate_output_sizes(original_size, sizes)
+                # Apply EXIF orientation FIRST before any calculations
+                img = self._fix_image_orientation(img)
+                corrected_size = img.size
+                
+                output_sizes = calculate_output_sizes(corrected_size, sizes)
                 
                 # Generate responsive sizes
                 for width, dimensions in output_sizes.items():
