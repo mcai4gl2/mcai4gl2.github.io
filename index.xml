@@ -1,4 +1,28 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog of Random things</title><link>https://mcai4gl2.github.io/</link><description>Recent content on Blog of Random things</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 08 Jan 2026 03:24:09 +0000</lastBuildDate><atom:link href="https://mcai4gl2.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>学车</title><link>https://mcai4gl2.github.io/others/driving-study/</link><pubDate>Thu, 08 Jan 2026 03:24:09 +0000</pubDate><guid>https://mcai4gl2.github.io/others/driving-study/</guid><description>Blog of Random things https://mcai4gl2.github.io/others/driving-study/ -&lt;p>40岁大叔12/18号终于拿C2。我本人一直是比较抗拒学车的，小时候极品飞车玩得比较多，觉得自己不会是一个好司机。后面工作一直很忙，也很难抽出时间，就把这事耽搁了。今年时间有了，也有开车的需求，所以就把这事安排上了。先说一下流程：驾校选的东方时尚，因为VR和班车离家都很方便，10/30报名，11/06科一一次过，11/20科二一次过，12/04科三挂，12/14再战成功通过。报名是东方时尚速成班，是不是学生里最便宜的，只能工作日，科二和科三培训需要连着选日子。科一就是自己在手机app刷题，小红书上一些口诀还是挺好用的。科二东方时尚是4次模拟器，然后实车4次练习，然后考试。科三手动挡是2次练习，然后考试。最后文明驾驶还是自己刷题，这里小红书口诀效果一般，不过文明驾驶简单很多。&lt;/p>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog of Random things</title><link>https://mcai4gl2.github.io/</link><description>Recent content on Blog of Random things</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 08 Jan 2026 10:39:01 +0000</lastBuildDate><atom:link href="https://mcai4gl2.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>我的Vibe Coding之旅</title><link>https://mcai4gl2.github.io/softwares/vibe-coding-journey/</link><pubDate>Thu, 08 Jan 2026 10:39:01 +0000</pubDate><guid>https://mcai4gl2.github.io/softwares/vibe-coding-journey/</guid><description>Blog of Random things https://mcai4gl2.github.io/softwares/vibe-coding-journey/ -&lt;p>大模型我是玩得比较晚的，25年3月份才开始用。那时LLM已经很火了。和大多数程序员最先用copliot不太一样，我最先用的是单位测试的的GPT，copliot现在其实也没用过。当时正好在搞一些java grpc interceptor的东西，这些功能都比较独立，一个class一个功能，我就在网页上让gpt生成代码，然后拷贝到IDE里面，写好代码就让它再去写测试。一个比较明确的功能需求GPT都可以做得比较好。稍微复杂的问题由于我这种手动代码交流方式，GPT网页很容易爆掉。这么调测试failure有时也很繁琐。这个阶段我很喜欢ai编程的地方集中在可以让它把一些none functional的需求写得很好，比如一些metric和logging，这些代码一般都会比较繁琐，在工作中是相对最没有priority的需求，交给AI搞，可以在不增加工作时间的情况搞定这些功能，是不错的选择。&lt;/p>
+&lt;p>这段时间，我还尝试用GPT搞一些架构设计的工作。这些大模型搞起来效果不是很稳定，有的问题解决很好，有的就都是幻觉瞎搞，代码不能compile或者测试问题解决不了。碰到这些问题，用我这种原始的没有agent能力的聊天模式搞，就很麻烦，效率也很低，agent下会比较省人工。&lt;/p>
+&lt;p>我对AI编程产生更大兴趣的契机是工作上有点闲时间，想研究一个数据分析的POC。问题需要解析一个asm的语法，然后进行一些分析和数据转换。asm这东西以前我接触的不多，自己看文档例子的话，需要不少时间。交给GPT，很快就把功能搞定了，虽然有这样那样的问题，但是架子有了，我改起来，或者让GPT再添加功能，都不是很难了。这次体验，为我后来的大模型使用方式提供了很好的范式：&lt;/p>
+&lt;ul>
+&lt;li>通过大模型高效解决在我技术能力边界的问题。这里的边界指的是我了解或者知道，但是不精通&lt;/li>
+&lt;li>代码需要完整的unit test coverage。这里我追求的不是数值，而是这些test为将来重构提供足够的保障
+后面我陆续用这个模式通过GPT解决了一系列类似的场景问题。这些问题都是工作中一些锦上添花或者可以大量简化问题调试的功能。在传统的项目模式下，很难去被prioritize，倒不是不重要，是这些问题的需求就很难讲清楚。现在，这些问题，有了想法，就可以通过大模型来解决，这极大提高了开发质量。&lt;/li>
+&lt;/ul>
+&lt;p>后面我开始使用claude code，在agent模式下编程。这个契机是我revive了一个3年多以前做的home project，代码当时用的是gradle kotlin配置，升级最新的jdk需要改动配置的语法，这些我自己弄起来还要看kotlin的语法，就交给了claude code试一下，没想到很快改好了。后面这个项目的代码有些调用的API已经不能用了，也需要升级，claude code都逐一解决了，这让我在很短的时间里就把这个项目恢复了，是我始料未及的。下面，我完全交给claude code去做一些POC的project，慢慢大模型也就越用越多了。&lt;/p>
+&lt;p>Claude code在这方面，的确是业界领先。但是封起号来也是雷厉风行。在封号的时候，我尝试了codex，gemini cli还有其他的模型。codex写代码的能力其实不差，但是agent模式做得的确不如claude code好，而且完全不像Claude code那样话痨。gemini能力上个人感觉就差了一点。国内的模型我也尝试了几个：&lt;/p>
+&lt;ul>
+&lt;li>qwen解决一些简单的问题是完全可以的，个人使用体验比gemini强，不如codex。有codex，我就不用qwen了&lt;/li>
+&lt;li>GLM我是通过iflow用的，感觉比qwen好，和codex差不多。它的优势是可以用ilfow或者claude code的cli。这两个cli都比codex好用很多。不过我的习惯还是可以用codex就用codex&lt;/li>
+&lt;li>kimi用了一下，一言难尽，api的计费方式让它没啥竞争力
+现在我有claude code用就用，没有就用codex，GPT的月费肯定是要交的，codex等于是白送了。相比cli，IDE的集成我倒是基本没接触过，下面有时间我会试试Cursor或者Antigravity。&lt;/li>
+&lt;/ul>
+&lt;p>大模型使用了10个月，我的感觉就是它对过去编程的方式进行了底层的革命，对我的编程解决问题的能力和学习的效率产生了前所未有的提高。我很难想象退回到没有大模型编程的时代了。最后再总结一下我的一些使用习惯：&lt;/p>
+&lt;ul>
+&lt;li>在每一个repo里面，我都会写好代码规范。比如需要配置devcontainer，所有代码的改动都要有测试，test coverage要达到多少等等&lt;/li>
+&lt;li>需要写代码之前，我都先会在qwen或者GPT的网页版上把问题和解决方式先聊清楚，然后生成一个需求文档，然后再进入cli根据repo代码规范改写一版需求&lt;/li>
+&lt;li>需求并不是越全面越好，很多时候，让大模型一下子解决一个大问题，写很多代码，他会搞出很多问题。大模型写代码的好处就是重构成本很低，所以不如循序渐进搞需求&lt;/li>
+&lt;li>大模型很能写代码，改问题的能力不如写代码。所以代码不应该是最终产出，有时候，有问题解决不了，让大模型推倒重建可能比让它不断地改更效率&lt;/li>
+&lt;li>大模型调试问题的时候，有时候是需要人为干预给方向的，要不很容易烧了很多token，但是搞错方向。这个方向并不需要精准说明问题，而是告诉它不要尝试啥&lt;/li>
+&lt;/ul>
+- https://mcai4gl2.github.io/softwares/vibe-coding-journey/ -</description></item><item><title>学车</title><link>https://mcai4gl2.github.io/others/driving-study/</link><pubDate>Thu, 08 Jan 2026 03:24:09 +0000</pubDate><guid>https://mcai4gl2.github.io/others/driving-study/</guid><description>Blog of Random things https://mcai4gl2.github.io/others/driving-study/ -&lt;p>40岁大叔12/18号终于拿C2。我本人一直是比较抗拒学车的，小时候极品飞车玩得比较多，觉得自己不会是一个好司机。后面工作一直很忙，也很难抽出时间，就把这事耽搁了。今年时间有了，也有开车的需求，所以就把这事安排上了。先说一下流程：驾校选的东方时尚，因为VR和班车离家都很方便，10/30报名，11/06科一一次过，11/20科二一次过，12/04科三挂，12/14再战成功通过。报名是东方时尚速成班，是不是学生里最便宜的，只能工作日，科二和科三培训需要连着选日子。科一就是自己在手机app刷题，小红书上一些口诀还是挺好用的。科二东方时尚是4次模拟器，然后实车4次练习，然后考试。科三手动挡是2次练习，然后考试。最后文明驾驶还是自己刷题，这里小红书口诀效果一般，不过文明驾驶简单很多。&lt;/p>
 &lt;p>我的一些小心得吧，科一和文明驾驶题库单刷没啥意义，1000多道题错了其实也记不住，直接刷模拟考就好了，要熟悉题目的表达方式，有些表达其实和常识不太一样。&lt;/p>
 &lt;p>科目二其实就是点位，这东西最好不要太机械，因为模拟器和真车不一样，每个教练教得也可能不一样，每个人身高和调镜子都不一样，点位也不完全一致。个人来讲，科目二最简单的是倒库，因为可以修，最难的是S弯。考试中倒库有一个坑点，就是考场的虚线地上不是很清楚，这个如果机械看线有可能就麻烦了，后来和教练聊，每年年初线会刷油漆，也许是年底考试特有的问题吧。&lt;/p>
 &lt;p>科目三我选了南线，听说简单。第一次挂了，挂了右转灯和靠边停车，当时心里自然还是挺郁闷的。10天冷静期过了，又约了考试。东方时尚会在考前一天免费安排一次练习，这点很贴心，要不10几天没摸车，考试的细节很难不忘。这次练车，我约了晚上，教练人很好，在天黑前先练了靠边停车，让我掌握好了，后面天黑了，还指导天黑开车的要领，考试和练车都照顾到了，让我有一种因祸得福的感觉。二刷科三，都很顺利，就是下车看到自己停车其实没有前一天晚上停得完美，感觉有点对不起教练。&lt;/p>
@@ -228,131 +252,4 @@ conda recipe on conda-forge is not maintained by us. We recommend to install via
 &lt;li>买的切好的肉，有点厚，不是很入味&lt;/li>
 &lt;/ul>
 &lt;p>总体还是挺好吃的！MASA的菜谱还是很推荐的。&lt;/p>
-- https://mcai4gl2.github.io/others/japanese-eggplant/ -</description></item><item><title>How fast can I read?</title><link>https://mcai4gl2.github.io/softwares/disk-read/</link><pubDate>Thu, 22 Jul 2021 15:04:15 +0800</pubDate><guid>https://mcai4gl2.github.io/softwares/disk-read/</guid><description>Blog of Random things https://mcai4gl2.github.io/softwares/disk-read/ -&lt;p>Computer storage has changed so much over last few decades, in both size and speed terms. We see a lot of amazing performance test results for NVMe drives nowadays. We could copy files much faster from one place to another. But what does it mean for software developers? How fast we shall expect our code to read? The following is some test results I have done in Java.&lt;/p>
-&lt;p>The data file I am trying to read is the &lt;a href="https://www.gdeltproject.org/data.html#rawdatafiles">GDELT 1.0 Event database&lt;/a>. The file name is: GDELT.MASTERREDUCEDV2.1979-2013.zip, which is 1.01 GB in zip format and 6.12 GB when uncompressed. The reason I picked this file is because it is real data and at the same time big enough.&lt;/p>
-&lt;h3 id="old-results">Old Results&lt;/h3>
-&lt;p>I firstly ran the test with my old desktop in Feb, which has Intel i5 6400 CPU and a SanDisk SSD Plus 1T drive. The drive is using SATA 3. The code is quite simple:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">LargeFileReadingTest&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>&lt;span style="color:#f92672">(&lt;/span>&lt;span style="color:#66d9ef">final&lt;/span> String&lt;span style="color:#f92672">[]&lt;/span> args&lt;span style="color:#f92672">)&lt;/span> &lt;span style="color:#66d9ef">throws&lt;/span> Exception &lt;span style="color:#f92672">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">long&lt;/span> start &lt;span style="color:#f92672">=&lt;/span> System&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#a6e22e">currentTimeMillis&lt;/span>&lt;span style="color:#f92672">();&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> lineCount &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#f92672">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ZipFile zipFile &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> ZipFile&lt;span style="color:#f92672">(&lt;/span>&lt;span style="color:#e6db74">&amp;#34;C:\\Codes\\temp\\io\\GDELT.MASTERREDUCEDV2.1979-2013.zip&amp;#34;&lt;/span>&lt;span style="color:#f92672">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span> &lt;span style="color:#f92672">(&lt;/span>BufferedReader reader &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> BufferedReader&lt;span style="color:#f92672">(&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">new&lt;/span> InputStreamReader&lt;span style="color:#f92672">(&lt;/span>zipFile&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#a6e22e">getInputStream&lt;/span>&lt;span style="color:#f92672">(&lt;/span>zipFile&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#a6e22e">entries&lt;/span>&lt;span style="color:#f92672">().&lt;/span>&lt;span style="color:#a6e22e">nextElement&lt;/span>&lt;span style="color:#f92672">()))))&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span> &lt;span style="color:#f92672">(&lt;/span>reader&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#a6e22e">readLine&lt;/span>&lt;span style="color:#f92672">()&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>&lt;span style="color:#f92672">)&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> lineCount&lt;span style="color:#f92672">++;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">long&lt;/span> duration &lt;span style="color:#f92672">=&lt;/span> System&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#a6e22e">currentTimeMillis&lt;/span>&lt;span style="color:#f92672">()&lt;/span> &lt;span style="color:#f92672">-&lt;/span> start&lt;span style="color:#f92672">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Expected to be: 87298047
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">assert&lt;/span> lineCount &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">87298047&lt;/span>&lt;span style="color:#f92672">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#a6e22e">out&lt;/span>&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#a6e22e">println&lt;/span>&lt;span style="color:#f92672">(&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Duration &amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> duration&lt;span style="color:#f92672">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>When I read the file from zip, it takes 32.326 secs to finish. When I read unzipped file using a BufferedReader with default buffer size (which is 8192), it takes 24.473 secs. When I increase the buffer size to 4096 * 512, it takes 28.618 secs. If I reduce the buffer size to 1024, it takes 22.136 secs. Reading unzipped file directly is about 260 MB/s given the file size, while SATA 3 has a read speed up to 545 MB/s based on &lt;a href="https://shop.westerndigital.com/en-ap/products/internal-drives/sandisk-ssd-plus-sata-iii-ssd#SDSSDA-120G-G27">data sheet from SanDisk&lt;/a>. These test results are based on one off runs, which may not that accurate. But since I already &lt;a href="https://mcai4gl2.github.io/computers/old-machine">pulled the desktop apart&lt;/a>, I cannot really rerun the tests unfortunately. I was hoping to get faster read by reading the zipped file but I suspect it didn&amp;rsquo;t work because my CPU (i5 6400) is not that fast.&lt;/p>
-&lt;h3 id="testing-with-nvme">Testing with NVMe&lt;/h3>
-&lt;p>Now that I have new machines I can rerun the tests. I have done three more tests, one with a Lenovo M920q with Intel i7-9700T and Samsung 970 EVO NVMe, another with a NUC11 with Intel i7-1165G7 and Samsung SSD 970 EVO Plus NVMe, and lastly with the same NUC but a different drive, which is WD Black SN750 NVMe. This time I tried to be more accurate. For each test, I run 10 times, instead of just once. The tests are done on Windows 10 version 10.0.19042 and Java version is 14.0.2.&lt;/p>
-&lt;p>The testing result is as follows. All times are in milliseconds:&lt;/p>
-&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th style="text-align:left">&lt;/th>
-&lt;th style="text-align:left">Reading Zip&lt;/th>
-&lt;th style="text-align:left">DefaultBufferSize&lt;/th>
-&lt;th style="text-align:left">1024BufferSize&lt;/th>
-&lt;th style="text-align:left">4096Times512BufferSize&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td style="text-align:left">M920&lt;/td>
-&lt;td style="text-align:left">24894.5 ± 351.7&lt;/td>
-&lt;td style="text-align:left">12325.9 ± 460.6&lt;/td>
-&lt;td style="text-align:left">15345.6 ± 537.0&lt;/td>
-&lt;td style="text-align:left">14294.3 ± 148.5&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td style="text-align:left">NUC with Samsung disk&lt;/td>
-&lt;td style="text-align:left">18861.6 ± 449.1&lt;/td>
-&lt;td style="text-align:left">8928.9 ± 256.1&lt;/td>
-&lt;td style="text-align:left">10414.3 ± 373.8&lt;/td>
-&lt;td style="text-align:left">10569.4 ± 125.6&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td style="text-align:left">NUC with WD Black&lt;/td>
-&lt;td style="text-align:left">18878.2 ± 311.3&lt;/td>
-&lt;td style="text-align:left">8666.2 ± 267.3&lt;/td>
-&lt;td style="text-align:left">10289.6 ± 401.5&lt;/td>
-&lt;td style="text-align:left">10206.0 ± 189.9&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table>
-&lt;h4 id="reading-zip">Reading Zip&lt;/h4>
-&lt;p>Looking at &lt;code>Reading Zip&lt;/code> speed, both M920q and NUC11 are slower than &lt;code>DefaultBufferSize&lt;/code> case, where unzipped file is read. The faster read with &lt;code>DefaultBufferSize&lt;/code> suggests that the bottleneck when &lt;code>Reading Zip&lt;/code> is on CPU rather than disk IO. Since the code is single threaded, the performance differences are linked to the single core max turbo frequency:&lt;/p>
-&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th style="text-align:left">&lt;/th>
-&lt;th style="text-align:left">CPU&lt;/th>
-&lt;th style="text-align:left">Max Turbo Frequency&lt;/th>
-&lt;th style="text-align:left">Reading Zip Performance&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td style="text-align:left">Old Desktop&lt;/td>
-&lt;td style="text-align:left">i5 6400&lt;/td>
-&lt;td style="text-align:left">&lt;a href="https://www.intel.com/content/www/us/en/products/sku/88185/intel-core-i56400-processor-6m-cache-up-to-3-30-ghz/specifications.html">3.30 GHz&lt;/a>&lt;/td>
-&lt;td style="text-align:left">32326&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td style="text-align:left">M920&lt;/td>
-&lt;td style="text-align:left">i7 9700T&lt;/td>
-&lt;td style="text-align:left">&lt;a href="https://www.intel.com/content/www/us/en/products/sku/191048/intel-core-i79700t-processor-12m-cache-up-to-4-30-ghz/specifications.html">4.30 GHz&lt;/a>&lt;/td>
-&lt;td style="text-align:left">24894.5&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td style="text-align:left">NUC&lt;/td>
-&lt;td style="text-align:left">i7 1165G7&lt;/td>
-&lt;td style="text-align:left">&lt;a href="https://www.intel.com/content/www/us/en/products/sku/208662/intel-core-i71165g7-processor-12m-cache-up-to-4-70-ghz/specifications.html">4.70 GHz&lt;/a>&lt;/td>
-&lt;td style="text-align:left">18869.9&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table>
-&lt;p>Trying to fit these 3 data points linearly:&lt;/p>
-&lt;p>&lt;img src="https://mcai4gl2.github.io/disk-read/zip_speed.png" alt="zip">&lt;/p>
-&lt;p>Using this simple fitted model, naively, to achieve the same speed as &lt;code>DefaultBufferSize&lt;/code> on M920, I would need a CPU with max turbo speed of 5.52 GHz. For NUC, I would need a CPU with max turbo speed of 5.90 GHz. I am not experienced in overclocking and not sure if they are practical or not. But it feels like trading CPU for disk IO on local disk setup doesn&amp;rsquo;t make much sense.&lt;/p>
-&lt;h4 id="defaultbuffersize">DefaultBufferSize&lt;/h4>
-&lt;p>Looking at &lt;code>DefaultBufferSize&lt;/code> value by itself, it is interesting to see that NUC is about 28% faster compared to M920 while the drive has comparable sequential read performance:&lt;/p>
-&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th style="text-align:left">SSD&lt;/th>
-&lt;th style="text-align:left">Data Sheet Sequential Read&lt;/th>
-&lt;th style="text-align:left">Observed Read Performance&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td style="text-align:left">Samsung SSD 970 EVO&lt;/td>
-&lt;td style="text-align:left">&lt;a href="https://www.samsung.com/semiconductor/minisite/ssd/product/consumer/970evo/">Up to 3,400 MB/s&lt;/a>&lt;/td>
-&lt;td style="text-align:left">519.23 MB/s&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td style="text-align:left">Samsung SSD 970 EVO Plus&lt;/td>
-&lt;td style="text-align:left">&lt;a href="https://www.samsung.com/semiconductor/minisite/ssd/product/consumer/970evoplus/">Up to 3,500 MB/s&lt;/a>&lt;/td>
-&lt;td style="text-align:left">716.77 MB/s&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td style="text-align:left">WD Black SN750&lt;/td>
-&lt;td style="text-align:left">&lt;a href="https://shop.westerndigital.com/products/internal-drives/wd-black-sn750-nvme-ssd#WDS250G3X0C">up to 3,400 MB/s&lt;/a>&lt;/td>
-&lt;td style="text-align:left">738.50 MB/s&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table>
-&lt;p>Without any hard evidence, I suspect M920 is slower because I use it as a server and there are 4 VMs it is running. The 970 EVO is the only drive which runs OS and everything else. Something else is slowing down it. This is partially supported by the fact that NUC running 970 EVO Plus is slightly slower than WD Black because the WD drive is the secondary drive while 970 EVO Plus runs the OS.&lt;/p>
-&lt;p>Perhaps a more important question to ask is can I read faster? Naively, I tired to run multiple reads in different threads. If the bottleneck is disk in single thread scenario, the read speed per thread shall be slowed down proportional to the number of threads. Testing on M920 with 2 threads, the average time to read with &lt;code>DefaultBufferSize&lt;/code> is 13436.2 milliseconds. This gives 952 MB/s. So, it is not the disk which is the bottleneck.&lt;/p>
-&lt;p>Then is it the java code (&lt;code>BufferedReader&lt;/code> and &lt;code>InputStreamReader&lt;/code>) which is less optimal? Some Googling leads me to &lt;a href="https://mechanical-sympathy.blogspot.com/2011/12/java-sequential-io-performance.html">Martin&amp;rsquo;s blog&lt;/a>, which is quite interesting. However, I will let my SSD to have some rest and give this a spin in another day.&lt;/p>
-- https://mcai4gl2.github.io/softwares/disk-read/ -</description></item></channel></rss>
+- https://mcai4gl2.github.io/others/japanese-eggplant/ -</description></item></channel></rss>

@@ -1,4 +1,131 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog of Random things</title><link>https://mcai4gl2.github.io/</link><description>Recent content on Blog of Random things</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 08 Jan 2026 03:24:09 +0000</lastBuildDate><atom:link href="https://mcai4gl2.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>My Desk Setup July 2021</title><link>https://mcai4gl2.github.io/computers/desk/</link><pubDate>Thu, 22 Jul 2021 08:08:00 +0800</pubDate><guid>https://mcai4gl2.github.io/computers/desk/</guid><description>Blog of Random things https://mcai4gl2.github.io/computers/desk/ -&lt;p>Working from home is becoming a norm due to COVID. Not surprisingly, proper home office setup is becoming trendy. I have watched a lot of videos on Youtube regarding desk setup. It feels like I shall write down my setup as well, for future reference.&lt;/p>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog of Random things</title><link>https://mcai4gl2.github.io/</link><description>Recent content on Blog of Random things</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 08 Jan 2026 10:39:01 +0000</lastBuildDate><atom:link href="https://mcai4gl2.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>How fast can I read?</title><link>https://mcai4gl2.github.io/softwares/disk-read/</link><pubDate>Thu, 22 Jul 2021 15:04:15 +0800</pubDate><guid>https://mcai4gl2.github.io/softwares/disk-read/</guid><description>Blog of Random things https://mcai4gl2.github.io/softwares/disk-read/ -&lt;p>Computer storage has changed so much over last few decades, in both size and speed terms. We see a lot of amazing performance test results for NVMe drives nowadays. We could copy files much faster from one place to another. But what does it mean for software developers? How fast we shall expect our code to read? The following is some test results I have done in Java.&lt;/p>
+&lt;p>The data file I am trying to read is the &lt;a href="https://www.gdeltproject.org/data.html#rawdatafiles">GDELT 1.0 Event database&lt;/a>. The file name is: GDELT.MASTERREDUCEDV2.1979-2013.zip, which is 1.01 GB in zip format and 6.12 GB when uncompressed. The reason I picked this file is because it is real data and at the same time big enough.&lt;/p>
+&lt;h3 id="old-results">Old Results&lt;/h3>
+&lt;p>I firstly ran the test with my old desktop in Feb, which has Intel i5 6400 CPU and a SanDisk SSD Plus 1T drive. The drive is using SATA 3. The code is quite simple:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">LargeFileReadingTest&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>&lt;span style="color:#f92672">(&lt;/span>&lt;span style="color:#66d9ef">final&lt;/span> String&lt;span style="color:#f92672">[]&lt;/span> args&lt;span style="color:#f92672">)&lt;/span> &lt;span style="color:#66d9ef">throws&lt;/span> Exception &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">long&lt;/span> start &lt;span style="color:#f92672">=&lt;/span> System&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#a6e22e">currentTimeMillis&lt;/span>&lt;span style="color:#f92672">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> lineCount &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#f92672">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ZipFile zipFile &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> ZipFile&lt;span style="color:#f92672">(&lt;/span>&lt;span style="color:#e6db74">&amp;#34;C:\\Codes\\temp\\io\\GDELT.MASTERREDUCEDV2.1979-2013.zip&amp;#34;&lt;/span>&lt;span style="color:#f92672">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span> &lt;span style="color:#f92672">(&lt;/span>BufferedReader reader &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> BufferedReader&lt;span style="color:#f92672">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">new&lt;/span> InputStreamReader&lt;span style="color:#f92672">(&lt;/span>zipFile&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#a6e22e">getInputStream&lt;/span>&lt;span style="color:#f92672">(&lt;/span>zipFile&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#a6e22e">entries&lt;/span>&lt;span style="color:#f92672">().&lt;/span>&lt;span style="color:#a6e22e">nextElement&lt;/span>&lt;span style="color:#f92672">()))))&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span> &lt;span style="color:#f92672">(&lt;/span>reader&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#a6e22e">readLine&lt;/span>&lt;span style="color:#f92672">()&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>&lt;span style="color:#f92672">)&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> lineCount&lt;span style="color:#f92672">++;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">long&lt;/span> duration &lt;span style="color:#f92672">=&lt;/span> System&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#a6e22e">currentTimeMillis&lt;/span>&lt;span style="color:#f92672">()&lt;/span> &lt;span style="color:#f92672">-&lt;/span> start&lt;span style="color:#f92672">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Expected to be: 87298047
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">assert&lt;/span> lineCount &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">87298047&lt;/span>&lt;span style="color:#f92672">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#a6e22e">out&lt;/span>&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#a6e22e">println&lt;/span>&lt;span style="color:#f92672">(&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Duration &amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> duration&lt;span style="color:#f92672">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>When I read the file from zip, it takes 32.326 secs to finish. When I read unzipped file using a BufferedReader with default buffer size (which is 8192), it takes 24.473 secs. When I increase the buffer size to 4096 * 512, it takes 28.618 secs. If I reduce the buffer size to 1024, it takes 22.136 secs. Reading unzipped file directly is about 260 MB/s given the file size, while SATA 3 has a read speed up to 545 MB/s based on &lt;a href="https://shop.westerndigital.com/en-ap/products/internal-drives/sandisk-ssd-plus-sata-iii-ssd#SDSSDA-120G-G27">data sheet from SanDisk&lt;/a>. These test results are based on one off runs, which may not that accurate. But since I already &lt;a href="https://mcai4gl2.github.io/computers/old-machine">pulled the desktop apart&lt;/a>, I cannot really rerun the tests unfortunately. I was hoping to get faster read by reading the zipped file but I suspect it didn&amp;rsquo;t work because my CPU (i5 6400) is not that fast.&lt;/p>
+&lt;h3 id="testing-with-nvme">Testing with NVMe&lt;/h3>
+&lt;p>Now that I have new machines I can rerun the tests. I have done three more tests, one with a Lenovo M920q with Intel i7-9700T and Samsung 970 EVO NVMe, another with a NUC11 with Intel i7-1165G7 and Samsung SSD 970 EVO Plus NVMe, and lastly with the same NUC but a different drive, which is WD Black SN750 NVMe. This time I tried to be more accurate. For each test, I run 10 times, instead of just once. The tests are done on Windows 10 version 10.0.19042 and Java version is 14.0.2.&lt;/p>
+&lt;p>The testing result is as follows. All times are in milliseconds:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">&lt;/th>
+&lt;th style="text-align:left">Reading Zip&lt;/th>
+&lt;th style="text-align:left">DefaultBufferSize&lt;/th>
+&lt;th style="text-align:left">1024BufferSize&lt;/th>
+&lt;th style="text-align:left">4096Times512BufferSize&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">M920&lt;/td>
+&lt;td style="text-align:left">24894.5 ± 351.7&lt;/td>
+&lt;td style="text-align:left">12325.9 ± 460.6&lt;/td>
+&lt;td style="text-align:left">15345.6 ± 537.0&lt;/td>
+&lt;td style="text-align:left">14294.3 ± 148.5&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">NUC with Samsung disk&lt;/td>
+&lt;td style="text-align:left">18861.6 ± 449.1&lt;/td>
+&lt;td style="text-align:left">8928.9 ± 256.1&lt;/td>
+&lt;td style="text-align:left">10414.3 ± 373.8&lt;/td>
+&lt;td style="text-align:left">10569.4 ± 125.6&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">NUC with WD Black&lt;/td>
+&lt;td style="text-align:left">18878.2 ± 311.3&lt;/td>
+&lt;td style="text-align:left">8666.2 ± 267.3&lt;/td>
+&lt;td style="text-align:left">10289.6 ± 401.5&lt;/td>
+&lt;td style="text-align:left">10206.0 ± 189.9&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h4 id="reading-zip">Reading Zip&lt;/h4>
+&lt;p>Looking at &lt;code>Reading Zip&lt;/code> speed, both M920q and NUC11 are slower than &lt;code>DefaultBufferSize&lt;/code> case, where unzipped file is read. The faster read with &lt;code>DefaultBufferSize&lt;/code> suggests that the bottleneck when &lt;code>Reading Zip&lt;/code> is on CPU rather than disk IO. Since the code is single threaded, the performance differences are linked to the single core max turbo frequency:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">&lt;/th>
+&lt;th style="text-align:left">CPU&lt;/th>
+&lt;th style="text-align:left">Max Turbo Frequency&lt;/th>
+&lt;th style="text-align:left">Reading Zip Performance&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">Old Desktop&lt;/td>
+&lt;td style="text-align:left">i5 6400&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.intel.com/content/www/us/en/products/sku/88185/intel-core-i56400-processor-6m-cache-up-to-3-30-ghz/specifications.html">3.30 GHz&lt;/a>&lt;/td>
+&lt;td style="text-align:left">32326&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">M920&lt;/td>
+&lt;td style="text-align:left">i7 9700T&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.intel.com/content/www/us/en/products/sku/191048/intel-core-i79700t-processor-12m-cache-up-to-4-30-ghz/specifications.html">4.30 GHz&lt;/a>&lt;/td>
+&lt;td style="text-align:left">24894.5&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">NUC&lt;/td>
+&lt;td style="text-align:left">i7 1165G7&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.intel.com/content/www/us/en/products/sku/208662/intel-core-i71165g7-processor-12m-cache-up-to-4-70-ghz/specifications.html">4.70 GHz&lt;/a>&lt;/td>
+&lt;td style="text-align:left">18869.9&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>Trying to fit these 3 data points linearly:&lt;/p>
+&lt;p>&lt;img src="https://mcai4gl2.github.io/disk-read/zip_speed.png" alt="zip">&lt;/p>
+&lt;p>Using this simple fitted model, naively, to achieve the same speed as &lt;code>DefaultBufferSize&lt;/code> on M920, I would need a CPU with max turbo speed of 5.52 GHz. For NUC, I would need a CPU with max turbo speed of 5.90 GHz. I am not experienced in overclocking and not sure if they are practical or not. But it feels like trading CPU for disk IO on local disk setup doesn&amp;rsquo;t make much sense.&lt;/p>
+&lt;h4 id="defaultbuffersize">DefaultBufferSize&lt;/h4>
+&lt;p>Looking at &lt;code>DefaultBufferSize&lt;/code> value by itself, it is interesting to see that NUC is about 28% faster compared to M920 while the drive has comparable sequential read performance:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">SSD&lt;/th>
+&lt;th style="text-align:left">Data Sheet Sequential Read&lt;/th>
+&lt;th style="text-align:left">Observed Read Performance&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">Samsung SSD 970 EVO&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.samsung.com/semiconductor/minisite/ssd/product/consumer/970evo/">Up to 3,400 MB/s&lt;/a>&lt;/td>
+&lt;td style="text-align:left">519.23 MB/s&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Samsung SSD 970 EVO Plus&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.samsung.com/semiconductor/minisite/ssd/product/consumer/970evoplus/">Up to 3,500 MB/s&lt;/a>&lt;/td>
+&lt;td style="text-align:left">716.77 MB/s&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">WD Black SN750&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://shop.westerndigital.com/products/internal-drives/wd-black-sn750-nvme-ssd#WDS250G3X0C">up to 3,400 MB/s&lt;/a>&lt;/td>
+&lt;td style="text-align:left">738.50 MB/s&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>Without any hard evidence, I suspect M920 is slower because I use it as a server and there are 4 VMs it is running. The 970 EVO is the only drive which runs OS and everything else. Something else is slowing down it. This is partially supported by the fact that NUC running 970 EVO Plus is slightly slower than WD Black because the WD drive is the secondary drive while 970 EVO Plus runs the OS.&lt;/p>
+&lt;p>Perhaps a more important question to ask is can I read faster? Naively, I tired to run multiple reads in different threads. If the bottleneck is disk in single thread scenario, the read speed per thread shall be slowed down proportional to the number of threads. Testing on M920 with 2 threads, the average time to read with &lt;code>DefaultBufferSize&lt;/code> is 13436.2 milliseconds. This gives 952 MB/s. So, it is not the disk which is the bottleneck.&lt;/p>
+&lt;p>Then is it the java code (&lt;code>BufferedReader&lt;/code> and &lt;code>InputStreamReader&lt;/code>) which is less optimal? Some Googling leads me to &lt;a href="https://mechanical-sympathy.blogspot.com/2011/12/java-sequential-io-performance.html">Martin&amp;rsquo;s blog&lt;/a>, which is quite interesting. However, I will let my SSD to have some rest and give this a spin in another day.&lt;/p>
+- https://mcai4gl2.github.io/softwares/disk-read/ -</description></item><item><title>My Desk Setup July 2021</title><link>https://mcai4gl2.github.io/computers/desk/</link><pubDate>Thu, 22 Jul 2021 08:08:00 +0800</pubDate><guid>https://mcai4gl2.github.io/computers/desk/</guid><description>Blog of Random things https://mcai4gl2.github.io/computers/desk/ -&lt;p>Working from home is becoming a norm due to COVID. Not surprisingly, proper home office setup is becoming trendy. I have watched a lot of videos on Youtube regarding desk setup. It feels like I shall write down my setup as well, for future reference.&lt;/p>
 &lt;p>Because I am renting in HongKong in a fully furnished flat, there is very little I can do about the desk without negotiating with my landlord. So, I kept the desk as it is and try to fit everything into it:&lt;/p>
 &lt;p>&lt;img src="https://mcai4gl2.github.io/desk.jpg" alt="desk">&lt;/p>
 &lt;p>My current setup has three screens:&lt;/p>
