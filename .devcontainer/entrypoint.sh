@@ -18,8 +18,8 @@ case "$cmd" in
         # Shift to remove the first argument (hugo)
         shift
         
-        # Switch to vscode user and run Hugo with remaining arguments
-        exec su - vscode -c "cd /src && hugo $*"
+        # Run Hugo directly as root with explicit paths
+        exec hugo --source=/src --destination=/src/public $*
         ;;
     "python3")
         # Shift to remove the first argument (python3)
