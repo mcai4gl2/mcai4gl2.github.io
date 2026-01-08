@@ -3,9 +3,9 @@ languageCode = "en-us"
 title = "Blog of Random things"
 theme = "diary"
 
-# Google Analytics (empty to prevent template errors)
-googleAnalytics = ""
-GoogleAnalytics = ""
+# Google Analytics configuration
+[params]
+  googleAnalytics = ""
 
 [[menu.main]]
 url = "/computers"
