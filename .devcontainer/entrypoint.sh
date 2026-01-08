@@ -1,21 +1,42 @@
 #!/bin/bash
 
-# If the first argument is 'hugo', run Hugo with proper permissions
-if [ "$1" = "hugo" ]; then
-    # Ensure directories exist with proper permissions
-    mkdir -p /src/public
-    chown -R vscode:vscode /src/public /src 2>/dev/null || true
-    
-    # Switch to vscode user and run Hugo
-    exec su - vscode -c "cd /src && hugo $*"
-else
-    # For python commands, switch to vscode user
-    if [ "$1" = "python3" ]; then
+# Get the command
+cmd="$1"
+
+# If no command provided, run shell
+if [ -z "$cmd" ]; then
+    exec /bin/sh
+fi
+
+# Handle different commands
+case "$cmd" in
+    "hugo")
+        # Ensure directories exist with proper permissions
+        mkdir -p /src/public
+        chown -R vscode:vscode /src/public /src 2>/dev/null || true
+        
+        # Shift to remove the first argument (hugo)
+        shift
+        
+        # Switch to vscode user and run Hugo with remaining arguments
+        exec su - vscode -c "cd /src && hugo $*"
+        ;;
+    "python3")
+        # Shift to remove the first argument (python3)
+        shift
+        
+        # Switch to vscode user and run Python with remaining arguments
         exec su - vscode -c "cd /src && python3 $*"
-    elif [ "$1" = "image-optimizer" ]; then
+        ;;
+    "image-optimizer")
+        # Shift to remove the first argument (image-optimizer)
+        shift
+        
+        # Switch to vscode user and run image-optimizer with remaining arguments
         exec su - vscode -c "cd /src && image-optimizer $*"
-    else
+        ;;
+    *)
         # For other commands, just execute them
         exec "$@"
-    fi
-fi
+        ;;
+esac
