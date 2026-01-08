@@ -39,8 +39,15 @@ RUN addgroup -g 1000 vscode && \
 # Change ownership of the workspace
 RUN chown -R vscode:vscode /src
 
+# Copy the entrypoint script
+COPY .devcontainer/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Switch to the non-root user
 USER vscode
+
+# Use the entrypoint script
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 # Expose the default Hugo server port
 EXPOSE 1313

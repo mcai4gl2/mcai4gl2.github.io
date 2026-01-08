@@ -86,9 +86,8 @@ jobs:
           docker run --rm \
             -v $PWD:/src \
             -w /src \
-            --entrypoint bash \
             hugo-devcontainer:test \
-            -c "hugo --source=/src --destination=/src/public --gc --minify"
+            hugo --gc --minify
 
       - name: Verify public directory exists
         run: |
