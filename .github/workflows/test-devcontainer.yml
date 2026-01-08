@@ -29,6 +29,34 @@ jobs:
           load: true
           tags: hugo-devcontainer:test
 
+      - name: Run unit tests in container
+        run: |
+          docker run --rm \
+            -v $PWD:/src \
+            hugo-devcontainer:test \
+            python3 -m pytest tests/ -v --cov=image_optimizer --cov-report=xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+
+      - name: Test image optimizer CLI
+        run: |
+          docker run --rm \
+            -v $PWD:/src \
+            hugo-devcontainer:test \
+            image-optimizer --help
+
+      - name: Test image optimizer analysis
+        run: |
+          docker run --rm \
+            -v $PWD:/src \
+            hugo-devcontainer:test \
+            image-optimizer analyze static/meat
+
       - name: Run Hugo server in container
         run: |
           docker run --rm -d --name hugo-test \

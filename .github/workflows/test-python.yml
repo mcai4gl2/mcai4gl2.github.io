@@ -1,0 +1,75 @@
+name: Python Unit Tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'image_optimizer/**'
+      - 'tests/**'
+      - 'requirements.txt'
+      - 'setup.py'
+      - 'pytest.ini'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'image_optimizer/**'
+      - 'tests/**'
+      - 'requirements.txt'
+      - 'setup.py'
+      - 'pytest.ini'
+  workflow_dispatch:
+
+jobs:
+  test-python:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, '3.10', 3.11]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Run unit tests
+        run: |
+          python -m pytest tests/ -v --cov=image_optimizer --cov-report=xml --cov-report=html
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+
+      - name: Test CLI commands
+        run: |
+          image-optimizer --help
+          image-optimizer version
+          python3 image_optimizer_minimal.py check-deps
+
+      - name: Test analysis functionality
+        run: |
+          image-optimizer analyze static/meat --recursive
+          python3 image_optimizer_minimal.py analyze static/meat
+
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results-${{ matrix.python-version }}
+          path: |
+            htmlcov/
+            coverage.xml

@@ -1,10 +1,31 @@
 FROM klakegg/hugo:ext-alpine AS hugo
 
-# Install git for submodule management
-RUN apk add --no-cache git
+# Install git and Python for image optimizer
+RUN apk add --no-cache \
+    git \
+    python3 \
+    py3-pip \
+    python3-dev \
+    gcc \
+    musl-dev \
+    libjpeg-turbo-dev \
+    zlib-dev \
+    numpy-dev
 
 # Set the working directory
 WORKDIR /src
+
+# Install Python dependencies for image optimizer
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copy the image optimizer package files
+COPY image_optimizer/ ./image_optimizer/
+COPY setup.py .
+COPY image_optimizer_minimal.py .
+
+# Install the image optimizer package
+RUN pip3 install -e .
 
 # Create a non-root user
 RUN addgroup -g 1000 vscode && \
