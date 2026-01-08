@@ -24,7 +24,8 @@ jobs:
       - name: Build DevContainer image
         uses: docker/build-push-action@v5
         with:
-          context: .devcontainer
+          context: .
+          file: ./.devcontainer/Dockerfile
           push: false
           load: true
           tags: hugo-devcontainer:test
