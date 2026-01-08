@@ -43,11 +43,11 @@ RUN chown -R vscode:vscode /src
 COPY .devcontainer/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Switch to the non-root user
-USER vscode
-
-# Use the entrypoint script
+# Use the entrypoint script (runs as root)
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+# Default command is to run as vscode user
+CMD ["/bin/sh"]
 
 # Expose the default Hugo server port
 EXPOSE 1313

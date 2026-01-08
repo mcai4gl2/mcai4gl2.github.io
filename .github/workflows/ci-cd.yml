@@ -41,9 +41,8 @@ jobs:
           docker run --rm \
             -v $PWD:/src \
             -w /src \
-            --entrypoint python3 \
             hugo-devcontainer:test \
-            -m pytest tests/ -v
+            python3 -m pytest tests/ -v
 
       - name: Generate coverage report
         run: |
@@ -51,9 +50,8 @@ jobs:
           docker run --rm \
             -v $PWD:/src \
             -w /src \
-            --entrypoint python3 \
             hugo-devcontainer:test \
-            -m pytest tests/ --cov=image_optimizer --cov-report=xml --cov-report=term-missing 2>&1 | grep -v "INTERNALERROR" || true
+            python3 -m pytest tests/ --cov=image_optimizer --cov-report=xml --cov-report=term-missing 2>&1 | grep -v "INTERNALERROR" || true
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
@@ -68,18 +66,16 @@ jobs:
           docker run --rm \
             -v $PWD:/src \
             -w /src \
-            --entrypoint image-optimizer \
             hugo-devcontainer:test \
-            --help
+            image-optimizer --help
 
       - name: Test image optimizer analysis in container
         run: |
           docker run --rm \
             -v $PWD:/src \
             -w /src \
-            --entrypoint image-optimizer \
             hugo-devcontainer:test \
-            analyze static/meat
+            image-optimizer analyze static/meat
 
       - name: Run Hugo build in container
         run: |
