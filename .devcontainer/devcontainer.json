@@ -14,13 +14,35 @@
     },
     "html.format.indentInnerHtml": true,
     "html.format.wrapAttributes": "auto",
-    "python.defaultInterpreterPath": "/usr/bin/python3"
+    "python.defaultInterpreterPath": "/usr/bin/python3",
+    "terminal.integrated.defaultProfile.linux": "bash"
   },
   "forwardPorts": [1313],
-  "postCreateCommand": "git submodule update --init --recursive && pip3 install -e .",
-  "postStartCommand": "hugo server --bind 0.0.0.0 --port 1313 --buildDrafts --buildFuture",
+  "postCreateCommand": "git submodule update --init --recursive && pip3 install -e . && /usr/local/bin/debug-hugo.sh",
+  "postAttachCommand": "/usr/local/bin/check-hugo.sh",
   "mounts": [
     "source=${localWorkspaceFolder},target=/src,type=bind"
   ],
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+          {
+            "label": "Start Hugo Server",
+            "type": "shell",
+            "command": "/usr/local/bin/debug-hugo.sh",
+            "group": "build",
+            "presentation": {
+              "echo": true,
+              "reveal": "always",
+              "focus": false,
+              "panel": "new"
+            }
+          }
+        ]
+      }
+    }
+  }
 }

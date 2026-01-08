@@ -5,7 +5,7 @@ Core image processing functionality
 import os
 import shutil
 from pathlib import Path
-from PIL import Image
+from PIL import Image, ImageOps
 import logging
 
 from .utils import (
@@ -145,8 +145,49 @@ class ImageProcessor:
         
         return output_path
     
+    def _fix_image_orientation(self, img):
+        """Fix image orientation based on EXIF data"""
+        try:
+            # Check if image has EXIF data
+            if hasattr(img, '_getexif') and img._getexif() is not None:
+                exif = img._getexif()
+                
+                # Get orientation tag (0x0112)
+                orientation = exif.get(0x0112, 1)
+                
+                # Apply rotation based on orientation
+                if orientation == 3:
+                    img = img.rotate(180, expand=True)
+                elif orientation == 6:
+                    img = img.rotate(270, expand=True)
+                elif orientation == 8:
+                    img = img.rotate(90, expand=True)
+                elif orientation in [2, 4, 5, 7]:
+                    # Handle mirrored orientations
+                    if orientation == 2:
+                        img = ImageOps.mirror(img)
+                    elif orientation == 4:
+                        img = img.rotate(180, expand=True)
+                        img = ImageOps.mirror(img)
+                    elif orientation == 5:
+                        img = img.rotate(90, expand=True)
+                        img = ImageOps.mirror(img)
+                    elif orientation == 7:
+                        img = img.rotate(270, expand=True)
+                        img = ImageOps.mirror(img)
+                
+                logger.debug(f"Applied EXIF orientation correction: {orientation}")
+            
+        except Exception as e:
+            logger.warning(f"Could not process EXIF orientation: {str(e)}")
+        
+        return img
+    
     def _save_resized_image(self, img, dimensions, output_path, format_ext, quality_override, content_type):
         """Save resized image with appropriate settings"""
+        # Handle EXIF orientation to preserve rotation
+        img = self._fix_image_orientation(img)
+        
         # Resize image
         resized_img = img.resize(dimensions, Image.Resampling.LANCZOS)
         
@@ -168,6 +209,11 @@ class ImageProcessor:
         
         # Ensure format is correct for PIL
         pil_format = "JPEG" if format_ext.lower() in ["jpeg", "jpg"] else format_ext.upper()
+        
+        # For JPEG, strip EXIF data to avoid orientation conflicts
+        # The orientation has already been applied to the image pixels
+        if pil_format == "JPEG":
+            save_kwargs["exif"] = b""  # Strip EXIF data
         
         resized_img.save(output_path, format=pil_format, **save_kwargs)
         logger.info(f"Saved {output_path}")
